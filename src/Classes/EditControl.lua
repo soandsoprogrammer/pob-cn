@@ -523,7 +523,6 @@ function EditClass:OnKeyDown(key, doubleClick)
 			if self.pasteFilter then
 				text = self.pasteFilter(text)
 			end
-			text = text:gsub("[\128-\255]","?")
 			if self.sel and self.sel ~= self.caret then
 				self:ReplaceSel(text)
 			else

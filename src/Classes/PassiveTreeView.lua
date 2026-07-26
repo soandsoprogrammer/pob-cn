@@ -825,6 +825,10 @@ function PassiveTreeViewClass:DoesNodeMatchSearchParams(node)
 	-- Check node name
 	err, needMatches = PCall(search, node.dn:lower(), needMatches)
 	if err then return false end
+	if #needMatches > 0 and TranslateZH then
+		err, needMatches = PCall(search, TranslateZH(node.dn):lower(), needMatches)
+		if err then return false end
+	end
 	if #needMatches == 0 then
 		return true
 	end
@@ -834,6 +838,10 @@ function PassiveTreeViewClass:DoesNodeMatchSearchParams(node)
 		-- Check display text first
 		err, needMatches = PCall(search, line:lower(), needMatches)
 		if err then return false end
+		if #needMatches > 0 and TranslateZH then
+			err, needMatches = PCall(search, TranslateZH(line):lower(), needMatches)
+			if err then return false end
+		end
 		if #needMatches == 0 then
 			return true
 		end
