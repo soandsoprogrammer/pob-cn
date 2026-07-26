@@ -7,6 +7,8 @@
 
 APP_NAME = "Path of Building"
 
+dofile("Localization.lua")
+
 SetWindowTitle(APP_NAME)
 ConExecute("set vid_mode 8")
 ConExecute("set vid_resizable 3")
