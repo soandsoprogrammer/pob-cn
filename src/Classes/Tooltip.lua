@@ -100,6 +100,10 @@ function TooltipClass:SetRecipe(recipe)
 	self.recipe = recipe
 end
 
+local function GetTranslatedRecipeName(recipeName)
+	return TranslateZH(recipeName:gsub("Oil$", " Oil"))
+end
+
 function TooltipClass:AddSeparator(size)
 	t_insert(self.lines, { size = size })
 end
@@ -122,10 +126,7 @@ function TooltipClass:GetSize()
 		local recipeTextSize = (title.size * 3) / 4
 		for _, recipeName in ipairs(self.recipe) do
 			-- Trim "Oil" from the recipe name, which normally looks like "GoldenOil"
-			local recipeNameShort = recipeName
-			if #recipeNameShort > 3 and recipeNameShort:sub(-3) == "Oil" then
-				recipeNameShort = recipeNameShort:sub(1, #recipeNameShort - 3)
-			end
+			local recipeNameShort = GetTranslatedRecipeName(recipeName)
 			imageX = imageX + DrawStringWidth(recipeTextSize, "VAR", recipeNameShort) + title.size * 1.25
 		end
 		ttW = m_max(ttW, imageX)
@@ -157,10 +158,7 @@ function TooltipClass:CalculateColumns(ttY, ttX, ttH, ttW, viewPort)
 			local recipeTextSize = (title.size * 3) / 4
 			for _, recipeName in ipairs(self.recipe) do
 				-- Trim "Oil" from the recipe name, which normally looks like "GoldenOil"
-				local recipeNameShort = recipeName
-				if #recipeNameShort > 3 and recipeNameShort:sub(-3) == "Oil" then
-					recipeNameShort = recipeNameShort:sub(1, #recipeNameShort - 3)
-				end
+				local recipeNameShort = GetTranslatedRecipeName(recipeName)
 				-- Draw the name of the recipe component (oil)
 				t_insert(drawStack, {ttX + imageX, y + (title.size - recipeTextSize)/2, "LEFT", recipeTextSize, "VAR", recipeNameShort})
 				imageX = imageX + DrawStringWidth(recipeTextSize, "VAR", recipeNameShort)

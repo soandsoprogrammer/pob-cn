@@ -573,9 +573,17 @@ function TreeTabClass:ModifyNodePopup(selectedNode)
 				if node.reminderText then
 					t_insert(descriptionsAndReminders, node.reminderText[1])
 				end
+				local translatedDescriptions = { }
+				for _, description in ipairs(descriptionsAndReminders) do
+					t_insert(translatedDescriptions, TranslateZH(description))
+				end
+				local translatedStats = { }
+				for _, stat in ipairs(node.sd) do
+					t_insert(translatedStats, TranslateZH(stat))
+				end
 				t_insert(modGroups, {
-				label = node.dn .. "                                                " .. table.concat(node.sd, ","),
-				descriptions = descriptionsAndReminders,
+				label = TranslateZH(node.dn) .. "                                                " .. table.concat(translatedStats, ","),
+				descriptions = translatedDescriptions,
 				id = id,
 				})
 			end
@@ -1040,22 +1048,29 @@ function TreeTabClass:FindTimelessJewel()
 	local function buildMods()
 		wipeTable(modData)
 		local smallModData = { }
+		local function translateDescriptions(descriptions)
+			local translated = { }
+			for _, description in ipairs(descriptions) do
+				t_insert(translated, TranslateZH(description))
+			end
+			return translated
+		end
 		for _, node in pairs(legionNodes) do
 			if node.id:match("^" .. timelessData.jewelType.name .. "_.+") and not isValueInArray(ignoredMods, node.dn) and not node.ks then
 				if node["not"] then
 					t_insert(modData, {
-						label = node.dn .. "                                                " .. node.sd[1],
-						descriptions = copyTable(node.sd),
+						label = TranslateZH(node.dn) .. "                                                " .. TranslateZH(node.sd[1]),
+						descriptions = translateDescriptions(node.sd),
 						type = timelessData.jewelType.name,
 						id = node.id
 					})
 					if node.sd[2] then
-						modData[#modData].label = modData[#modData].label .. " " .. node.sd[2]
+						modData[#modData].label = modData[#modData].label .. " " .. TranslateZH(node.sd[2])
 					end
 				else
 					t_insert(smallModData, {
-						label = node.dn,
-						descriptions = copyTable(node.sd),
+						label = TranslateZH(node.dn),
+						descriptions = translateDescriptions(node.sd),
 						type = timelessData.jewelType.name,
 						id = node.id
 					})
