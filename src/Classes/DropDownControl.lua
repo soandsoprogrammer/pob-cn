@@ -301,6 +301,7 @@ function DropDownClass:Draw(viewPort, noTooltip)
 			selLabel = selLabel.label
 		end
 	end
+	selLabel = TranslateZH(selLabel or "")
 	SetViewport(x + 2, y + 2, width - height, lineHeight)
 	DrawString(0, 0, "LEFT", lineHeight, "VAR", selLabel or "")
 	SetViewport()
@@ -349,7 +350,7 @@ function DropDownClass:Draw(viewPort, noTooltip)
 					SetDrawColor(0.66, 0.66, 0.66)
 				end
 				-- draw actual item label with search match highlight if available
-				local label = type(listVal) == "table" and listVal.label or listVal
+				local label = TranslateZH(type(listVal) == "table" and listVal.label or listVal)
 				DrawString(0, y, "LEFT", lineHeight, "VAR", label)
 				self:DrawSearchHighlights(label, searchInfo, 0, y, width - 4, lineHeight)
 			end
